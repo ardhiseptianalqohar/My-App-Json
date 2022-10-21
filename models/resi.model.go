@@ -20,16 +20,15 @@ type Resi struct {
 func DataResi() (Response, error) {
 	var obj Resi
 	var arrobj []Resi
-	var  res Response 
+	var res Response
 
-	
 	db := config.ConnectToDB()
 
 	sqlStatement := "SELECT * FROM resi"
 
 	rows, err := db.Query(sqlStatement)
 
-	// defer rows.Close()
+	defer rows.Close()
 
 	if err != nil {
 		return res, err
