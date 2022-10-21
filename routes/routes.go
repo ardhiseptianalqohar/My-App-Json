@@ -20,6 +20,8 @@ func Init() *echo.Echo {
 
 	e.PUT("/resi", controllers.UpdateData)
 
+	e.DELETE("/resi/:id", controllers.HapusData)
+
 	return e
 
 }

@@ -123,3 +123,40 @@ func UpdateData(id int, nomor string, pengirim string, penerima string, alamat_p
 
 	return res, nil
 }
+
+func HapusData(id int) (Response, error) {
+
+	db := config.ConnectToDB()
+
+	var res Response
+
+	sqlStatement := "DELETE FROM resi WHERE id = ?"
+	stmt, err := db.Prepare(sqlStatement)
+	if err != nil {
+		return res, err
+	}
+
+	result, err := stmt.Exec(id)
+	if err != nil {
+		return res, nil
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return res, err
+	}
+
+	// getIdLast, err := result.LastInsertId()
+	// if err != nil {
+	// 	return res, err
+	// }
+
+	res.Status = http.StatusOK
+	res.Message = "SUKSES"
+	res.Data = map[string]int64{
+		"rows": rowsAffected,
+		// "getIdLast": getIdLast,
+	}
+
+	return res, nil
+}
