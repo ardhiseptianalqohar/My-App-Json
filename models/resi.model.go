@@ -1,6 +1,7 @@
 package models
 
 import (
+	// "database/sql"
 	"myapp/config"
 	"net/http"
 )
@@ -79,6 +80,45 @@ func SimpanData(nomor string, pengirim string, penerima string, alamat_penerima 
 	res.Message = "SUKSES"
 	res.Data = map[string]int64{
 		"getIdLast": getIdLast,
+	}
+
+	return res, nil
+}
+
+func UpdateData(id int, nomor string, pengirim string, penerima string, alamat_penerima string,
+	product string, product_type string, status_barang string, estimasi string) (Response, error) {
+
+	var res Response
+
+	db := config.ConnectToDB()
+
+	sqlStatement := "UPDATE resi SET nomor = ?, pengirim = ?, penerima = ?, alamat_penerima = ?, product = ?, prodcut_type = ?, status_barang = ?, estimasi = ? WHERE id = ?"
+	stmt, err := db.Prepare(sqlStatement)
+	if err != nil {
+		return res, err
+	}
+
+	result, err := stmt.Exec(nomor, pengirim, penerima, alamat_penerima, product, product_type, status_barang, estimasi, id)
+
+	if err != nil {
+		return res, nil
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return res, err
+	}
+
+	// getIdLast, err := result.LastInsertId()
+	// if err != nil {
+	// 	return res, err
+	// }
+
+	res.Status = http.StatusOK
+	res.Message = "SUKSES"
+	res.Data = map[string]int64{
+		"rows": rowsAffected,
+		// "getIdLast": getIdLast,
 	}
 
 	return res, nil

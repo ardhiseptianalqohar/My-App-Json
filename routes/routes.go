@@ -17,5 +17,9 @@ func Init() *echo.Echo {
 	e.GET("/resi", controllers.DataResi)
 
 	e.POST("/resi", controllers.SimpanController)
+
+	e.PUT("/resi", controllers.UpdateData)
+
 	return e
+
 }
