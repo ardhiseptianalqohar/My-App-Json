@@ -92,7 +92,7 @@ func UpdateData(id int, nomor string, pengirim string, penerima string, alamat_p
 
 	db := config.ConnectToDB()
 
-	sqlStatement := "UPDATE resi SET nomor = ?, pengirim = ?, penerima = ?, alamat_penerima = ?, product = ?, prodcut_type = ?, status_barang = ?, estimasi = ? WHERE id = ?"
+	sqlStatement := "UPDATE resi SET nomor = ?, pengirim = ?, penerima = ?, alamat_penerima = ?, product = ?, product_type = ?, status_barang = ?, estimasi = ? WHERE id = ?"
 	stmt, err := db.Prepare(sqlStatement)
 	if err != nil {
 		return res, err
